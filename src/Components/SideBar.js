@@ -1,15 +1,20 @@
 import Box from "@mui/material/Box";
+import FilterBar from "./FilterBar";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { BRANDS_IMGS } from "../assets/CARTS";
 
 const BRANDS = Object.keys(BRANDS_IMGS);
 
-export default function SideBar() {
+export default function SideBar({ minMax, onMinMaxChange }) {
   return (
-    <Box sx={{ width: 192, px: 2, backgroundColor: "white" }}>
+    <Box sx={{ width: 230, pl: 2, backgroundColor: "white" }}>
       <Box id="brands" sx={{ py: 3 }}>
-        <Typography variant="subtitle1" component="h3">
+        <Typography
+          sx={{ fontWeight: "bold" }}
+          variant="subtitle1"
+          component="h3"
+        >
           Brands
         </Typography>
 
@@ -26,6 +31,7 @@ export default function SideBar() {
             </Typography>
           ))}
         </Stack>
+        <FilterBar minMax={minMax} onMinMaxChange={onMinMaxChange} />
       </Box>
     </Box>
   );

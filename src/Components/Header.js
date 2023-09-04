@@ -18,18 +18,8 @@ import ShopIcon from "@mui/icons-material/Shop";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}));
-
-export default function Header({ numCarts }) {
+export default function Header({ numCarts, carts, onCartsChange }) {
   return (
     <AppBar position="sticky">
       <Toolbar>
@@ -37,7 +27,11 @@ export default function Header({ numCarts }) {
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           ShopFlowEase
         </Typography>
-        <AppDrawer numCarts={numCarts} />
+        <AppDrawer
+          numCarts={numCarts}
+          carts={carts}
+          onCartsChange={onCartsChange}
+        />
       </Toolbar>
     </AppBar>
   );

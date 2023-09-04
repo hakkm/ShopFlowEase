@@ -4,28 +4,37 @@ import CARTS from "./assets/CARTS";
 import Carts from "./Components/Carts";
 import CssBaseline from "@mui/material/CssBaseline";
 import Footer from "./Components/Footer";
-import FilterBar from "./Components/FilterBar";
 import Header from "./Components/Header";
 import SideBar from "./Components/SideBar";
+import InfoBar from "./Components/InfoBar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 
 const theme = createTheme({
   palette: {
+    mode: "light",
     primary: {
-      main: "#366f03",
+      main: "#3f51b5",
+    },
+    secondary: {
+      main: "#f50057",
     },
   },
 });
 
+const SORT_MAP = {
+  None: () => 1,
+  PriceLH: (a, b) => a.price - b.price,
+  PriceHL: (a, b) => b.price - a.price,
+  BestSeller: (a, b) => b.sold - a.sold,
+  Review: (a, b) => b.stars - a.stars,
+};
+
 export default function App() {
   const [carts, setCarts] = useState(CARTS);
-  const [numCarts, setNumCarts] = useState(0);
-  const [eachCartOrder, setEachCartOrder] = useState(() => {
-    const eachCartOrder = [];
-    CARTS.map((cart) => eachCartOrder.push({ id: cart.id, orders: 0 }));
-    return eachCartOrder;
-  });
+  const [minMax, setMinMax] = useState(["", ""]);
+  const [sort, setSort] = useState("None");
+  console.log(sort);
 
   return (
     <ThemeProvider theme={theme}>
@@ -38,24 +47,22 @@ export default function App() {
         }}
       >
         <CssBaseline />
-        <Header numCarts={numCarts} />
+        <Header carts={carts} onCartsChange={setCarts} />
         {/* main */}
         <Box
           sx={{
             display: "flex",
           }}
         >
-          <SideBar />
+          <SideBar minMax={minMax} onMinMaxChange={setMinMax} />
           <Container maxWidth="lg" sx={{ m: 3 }}>
-            <FilterBar />
+            <InfoBar sort={sort} onSortChange={setSort} />
             <Carts
+              sort={sort}
+              SORT_MAP={SORT_MAP}
+              minMax={minMax}
               carts={carts}
               onCartsChange={setCarts}
-              CARTS={CARTS}
-              onAddCart={setNumCarts}
-              numCarts={numCarts}
-              eachCartOrder={eachCartOrder}
-              onAddEachCartOrder={setEachCartOrder}
             />
           </Container>
         </Box>

@@ -1,32 +1,32 @@
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
+import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 export default function Cart({
   id,
   src,
+  carts,
+  onCartsChange,
   description,
   stars,
   reviews,
   sold,
   price,
   brand,
-  onAddCart,
-  numCarts,
-  eachCartOrder,
-  onAddEachCartOrder,
 }) {
   const [floorPartPrice, decimalPartPrice] = price.toString().split(".");
   function handleClick() {
-    onAddCart(numCarts + 1);
-    const newCartOrders = eachCartOrder.map((cart) => {
-      if (id === cart.id) return { ...cart, orders: cart.orders + 1 };
+    const newCarts = carts.map((cart) => {
+      if (id === cart.id)
+        return { ...cart, orders: cart.orders ? cart.orders + 1 : 1 };
       return cart;
     });
-    onAddEachCartOrder(newCartOrders);
+    onCartsChange(newCarts);
+    // console.log(newCarts);
   }
+
   return (
     <Paper
       sx={{

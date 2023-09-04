@@ -9,8 +9,11 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import CARTS from "./assets/CARTS";
+import Carts from "./Components/Carts";
 import CssBaseline from "@mui/material/CssBaseline";
 import Footer from "./Components/Footer";
+import FilterBar from "./Components/FilterBar";
 import Grid from "@mui/material/Grid";
 import Header from "./Components/Header";
 import IconButton from "@mui/material/IconButton";
@@ -21,12 +24,10 @@ import ShopIcon from "@mui/icons-material/Shop";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { BRANDS_IMGS } from "./assets/CARTS";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
+import { useState } from "react";
 
 const BRANDS = Object.keys(BRANDS_IMGS);
 const theme = createTheme({
@@ -37,125 +38,14 @@ const theme = createTheme({
   },
 });
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    right: -3,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}));
-
-function AddCartButton() {
-  return (
-    <IconButton aria-label="cart">
-      <StyledBadge badgeContent={4} color="secondary">
-        <ShoppingCartIcon />
-      </StyledBadge>
-    </IconButton>
-  );
-}
-
-function Carts() {
-  return (
-    <Paper
-      sx={{
-        minwdith: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#fff",
-        mt: 1,
-      }}
-    >
-      <Cart />
-      <Cart />
-      <Cart />
-    </Paper>
-  );
-}
-
-function Cart() {
-  return (
-    <Paper
-      sx={{
-        minwdith: "100vh",
-        display: "flex",
-        backgroundColor: "#fff",
-        mt: 1,
-      }}
-    >
-      {/* Cart */}
-      <Box
-        sx={{
-          my: 2,
-          ml: 2,
-        }}
-      >
-        <img
-          src="https://picsum.photos/200/300"
-          srcSet="https://picsum.photos/200/300"
-          alt="Todo"
-          loading="lazy"
-          width="180"
-          height="180"
-        />
-      </Box>
-      <Box
-        sx={{
-          m: 1,
-        }}
-      >
-        <Typography mt={1} variant="body2" component="p">
-          Some Fucking Description Here It should Be a little longe in order to
-          look very beautiful and consistent
-        </Typography>
-        <Typography variant="body2" component="p">
-          239 sold
-        </Typography>
-        <Typography my={1} variant="h6" component="p">
-          US $20.<span style={{ fontSize: "14px" }}>18</span>
-        </Typography>
-        <Rating name="read-only" value={4.9} readOnly />
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button my={3} variant="contained" color="primary">
-            Add to Cart
-          </Button>
-        </Box>
-      </Box>
-    </Paper>
-  );
-}
-
-function Price() {
-  return (
-    <Box
-      sx={{
-        alignItems: "center",
-      }}
-    >
-      <TextField
-        size="small"
-        label="Min Price"
-        type="number"
-        variant="outlined"
-        style={{ width: "100px" }}
-      />
-      <TextField
-        size="small"
-        label="Max Price"
-        type="number"
-        variant="outlined"
-        style={{ width: "100px" }}
-      />
-      <Button flexShrink={1} variant="rounded" color="primary" size="small">
-        Ok
-      </Button>
-    </Box>
-  );
-}
-
 export default function App() {
-  console.log("hakim");
+  const [numCarts, setNumCarts] = useState(0);
+  const [eachCartOrder, setEachCartOrder] = useState(() => {
+    const eachCartOrder = [];
+    CARTS.map((cart) => eachCartOrder.push({ id: cart.id, orders: 0 }));
+    return eachCartOrder;
+  });
+  console.log(eachCartOrder);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -167,7 +57,7 @@ export default function App() {
         }}
       >
         <CssBaseline />
-        <Header />
+        <Header numCarts={numCarts} />
         <main>
           <Box
             sx={{
@@ -195,29 +85,15 @@ export default function App() {
                 </Stack>
               </Box>
             </Box>
-            <Container maxWidth="md" sx={{ m: 3 }}>
-              <Typography color="grey" sx={{ my: 2 }}>
-                ShopFlowEase {">"}{" "}
-                <span style={{ fontWeight: "bold" }}>"Graphic Tablet"</span>
-              </Typography>
-              {/* Price */}
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography>Price:</Typography>
-                <Price />
-
-                <Typography sx={{ ml: 1 }}>Order by:</Typography>
-                <ButtonGroup
-                  sx={{ ml: 1 }}
-                  color="secondary"
-                  variant="outlined"
-                  aria-label="outlined button group"
-                >
-                  <Button>Price</Button>
-                  <Button>Orders</Button>
-                </ButtonGroup>
-              </Box>
-              {/* Carts */}
-              <Carts />
+            <Container maxWidth="lg" sx={{ m: 3 }}>
+              <FilterBar />
+              <Carts
+                CARTS={CARTS}
+                onAddCart={setNumCarts}
+                numCarts={numCarts}
+                eachCartOrder={eachCartOrder}
+                onAddEachCartOrder={setEachCartOrder}
+              />
             </Container>
           </Box>
         </main>

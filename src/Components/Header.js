@@ -29,26 +29,16 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function AddCartButton() {
+export default function Header({ numCarts }) {
   return (
-    <IconButton aria-label="cart">
-      <StyledBadge badgeContent={4} color="secondary">
-        <ShoppingCartIcon />
-      </StyledBadge>
-    </IconButton>
-  );
-}
-
-export default function Header() {
-  return (
-    <AppBar position="relative">
+    <AppBar position="sticky">
       <Toolbar>
         <ShopIcon sx={{ mr: 2 }} />
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           ShopFlowEase
         </Typography>
         <IconButton aria-label="cart">
-          <StyledBadge badgeContent={4} color="secondary">
+          <StyledBadge badgeContent={numCarts} color="secondary">
             <ShoppingCartIcon />
           </StyledBadge>
         </IconButton>

@@ -1,4 +1,4 @@
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import AppDrawer from "./AppDrawer";
 import AppBar from "@mui/material/AppBar";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
@@ -37,11 +37,7 @@ export default function Header({ numCarts }) {
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           ShopFlowEase
         </Typography>
-        <IconButton aria-label="cart">
-          <StyledBadge badgeContent={numCarts} color="secondary">
-            <ShoppingCartIcon />
-          </StyledBadge>
-        </IconButton>
+        <AppDrawer numCarts={numCarts} />
       </Toolbar>
     </AppBar>
   );

@@ -15,6 +15,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function ShopButton({ toggleDrawer, carts }) {
   function calcNumCarts() {
     let numOrders = 0;
+    // eslint-disable-next-line array-callback-return
     carts.map((cart) => {
       cart.orders && (numOrders = numOrders + cart.orders);
     });

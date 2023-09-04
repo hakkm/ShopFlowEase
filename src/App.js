@@ -34,7 +34,7 @@ export default function App() {
   const [carts, setCarts] = useState(CARTS);
   const [minMax, setMinMax] = useState(["", ""]);
   const [sort, setSort] = useState("None");
-  console.log(sort);
+  const [brands, setBrands] = useState([]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,12 +52,20 @@ export default function App() {
         <Box
           sx={{
             display: "flex",
+            flexGrow: 1,
           }}
         >
-          <SideBar minMax={minMax} onMinMaxChange={setMinMax} />
+          <SideBar
+            minMax={minMax}
+            onMinMaxChange={setMinMax}
+            brands={brands}
+            onBrandChange={setBrands}
+          />
           <Container maxWidth="lg" sx={{ m: 3 }}>
             <InfoBar sort={sort} onSortChange={setSort} />
             <Carts
+              brands={brands}
+              onBrandChange={setBrands}
               sort={sort}
               SORT_MAP={SORT_MAP}
               minMax={minMax}

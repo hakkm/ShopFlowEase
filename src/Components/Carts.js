@@ -7,6 +7,7 @@ export default function Carts({
   minMax,
   sort,
   SORT_MAP,
+  brands,
 }) {
   function priceFilter(price) {
     const [min, max] = minMax;
@@ -24,6 +25,9 @@ export default function Carts({
       }}
     >
       {carts
+        .filter((cart) =>
+          brands.length === 0 ? true : brands.includes(cart.brand)
+        )
         .filter((cart) => priceFilter(cart.price))
         .sort(SORT_MAP[sort])
         .map((cart) => (

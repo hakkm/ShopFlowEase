@@ -6,10 +6,9 @@ import Paper from "@mui/material/Paper";
 import { Typography, IconButton } from "@mui/material";
 
 export default function DrawerCart({ cart, carts, onCartsChange }) {
-  console.log(carts);
   const [floorPartPrice, decimalPartPrice] = cart.price.toString().split(".");
 
-  const handleClick = (operator) => (event) => {
+  const handleClick = (operator) => () => {
     const newCarts = carts.map((cartItem) => {
       if (cart.id === cartItem.id)
         return {

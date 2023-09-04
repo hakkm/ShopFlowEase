@@ -24,7 +24,6 @@ export default function Cart({
       return cart;
     });
     onCartsChange(newCarts);
-    // console.log(newCarts);
   }
 
   return (
